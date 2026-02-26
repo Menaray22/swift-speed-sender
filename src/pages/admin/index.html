@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Swift Speed Sender</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/admin.css">
+  <script>
+    window.__SSS_ENV = {
+      SUPABASE_URL:  '%%SUPABASE_URL%%',
+      SUPABASE_ANON: '%%SUPABASE_ANON_KEY%%'
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body class="admin-login-body">
+
+<div class="admin-login-wrap">
+  <div class="admin-login-card">
+
+    <!-- Logo -->
+    <div class="admin-login-logo">
+      <div class="admin-login-logo__name">Swift Speed Sender</div>
+      <div class="admin-login-logo__sub">Admin Portal · Est. 1940</div>
+    </div>
+
+    <!-- Session expired notice -->
+    <div id="session-notice" class="admin-notice hidden" role="alert">
+      <i class="fas fa-clock"></i>
+      Your session expired. Please sign in again.
+    </div>
+
+    <h1 class="admin-login-title">Sign In</h1>
+    <p class="admin-login-subtitle">Access the administration dashboard.</p>
+
+    <form id="login-form" novalidate aria-label="Admin login form">
+      <div class="form-group" id="email-group">
+        <label class="form-label" for="admin-email">Email Address</label>
+        <input
+          type="email"
+          id="admin-email"
+          class="form-input"
+          placeholder="admin@swiftspeedsender.com"
+          autocomplete="username"
+          aria-required="true"
+          required
+        >
+        <span class="form-error" id="email-error"></span>
+      </div>
+
+      <div class="form-group" id="password-group">
+        <label class="form-label" for="admin-password">Password</label>
+        <div style="position:relative">
+          <input
+            type="password"
+            id="admin-password"
+            class="form-input"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            aria-required="true"
+            required
+          >
+          <button type="button" id="toggle-pw" class="admin-pw-toggle" aria-label="Toggle password visibility">
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+        <span class="form-error" id="password-error"></span>
+      </div>
+
+      <div id="login-error" class="admin-error hidden" role="alert" aria-live="polite"></div>
+
+      <button type="submit" class="btn btn--primary" style="width:100%;justify-content:center;margin-top:0.5rem" id="login-btn">
+        Sign In
+      </button>
+    </form>
+
+    <div style="margin-top:var(--gap-md);padding-top:var(--gap-md);border-top:1px solid rgba(13,27,42,0.08)">
+      <button type="button" id="forgot-btn" class="admin-forgot-link">
+        Forgot your password?
+      </button>
+    </div>
+
+    <!-- Reset form (hidden by default) -->
+    <div id="reset-form-wrap" class="hidden">
+      <form id="reset-form" novalidate aria-label="Password reset form">
+        <p style="font-size:0.875rem;color:var(--text-mid);margin-bottom:var(--gap-sm)">
+          Enter your admin email and we will send a password reset link.
+        </p>
+        <div class="form-group">
+          <input type="email" id="reset-email" class="form-input" placeholder="Your email address">
+        </div>
+        <div id="reset-msg" class="hidden" role="alert" aria-live="polite"></div>
+        <div style="display:flex;gap:0.5rem">
+          <button type="button" id="reset-cancel" class="btn btn--outline btn--sm">Cancel</button>
+          <button type="submit" class="btn btn--primary btn--sm" id="reset-btn">Send Reset Link</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <p class="admin-login-footer">
+    <i class="fas fa-shield-halved"></i>
+    Secure admin access — Swift Speed Sender © <span id="login-year"></span>
+  </p>
+</div>
+
+<script type="module" src="../../js/admin-login.js"></script>
+<script>document.getElementById('login-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

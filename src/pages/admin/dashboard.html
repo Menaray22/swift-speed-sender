@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Swift Speed Sender Admin</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../../images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Leaflet for checkpoint map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/admin.css">
+  <script>
+    window.__SSS_ENV = {
+      SUPABASE_URL:  '%%SUPABASE_URL%%',
+      SUPABASE_ANON: '%%SUPABASE_ANON_KEY%%'
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body class="admin-body">
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar" id="admin-sidebar" role="navigation" aria-label="Admin navigation">
+  <div class="admin-sidebar__logo">
+    <div class="admin-sidebar__logo-name">Swift Speed Sender</div>
+    <div class="admin-sidebar__logo-sub">Admin Dashboard</div>
+  </div>
+
+  <nav class="admin-nav">
+    <a href="#" class="admin-nav__item active" data-tab="packages" aria-label="Packages">
+      <i class="fas fa-box" aria-hidden="true"></i>
+      <span>Packages</span>
+    </a>
+    <a href="#" class="admin-nav__item" data-tab="contacts" aria-label="Contacts">
+      <i class="fas fa-envelope" aria-hidden="true"></i>
+      <span>Messages</span>
+      <span class="admin-nav__badge hidden" id="unread-badge">0</span>
+    </a>
+    <a href="#" class="admin-nav__item" data-tab="services" aria-label="Services">
+      <i class="fas fa-cubes" aria-hidden="true"></i>
+      <span>Services</span>
+    </a>
+    <a href="#" class="admin-nav__item" data-tab="settings" aria-label="Settings">
+      <i class="fas fa-sliders" aria-hidden="true"></i>
+      <span>Site Settings</span>
+    </a>
+    <a href="#" class="admin-nav__item" data-tab="pricing" aria-label="Pricing">
+      <i class="fas fa-tag" aria-hidden="true"></i>
+      <span>Quote Pricing</span>
+    </a>
+    <a href="#" class="admin-nav__item" data-tab="errors" aria-label="Error logs">
+      <i class="fas fa-triangle-exclamation" aria-hidden="true"></i>
+      <span>Error Logs</span>
+    </a>
+  </nav>
+
+  <div class="admin-sidebar__footer">
+    <div class="admin-sidebar__user" id="admin-user-email"></div>
+    <button class="btn btn--outline btn--sm" id="logout-btn" style="width:100%;justify-content:center">
+      <i class="fas fa-right-from-bracket"></i>
+      Sign Out
+    </button>
+    <a href="../../pages/index.html" class="admin-sidebar__view-site" target="_blank">
+      <i class="fas fa-arrow-up-right-from-square"></i>
+      View Live Site
+    </a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="admin-main" id="admin-main">
+
+  <!-- Mobile header -->
+  <header class="admin-mobile-header">
+    <button class="admin-sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+    <span class="admin-mobile-title">Swift Speed Sender Admin</span>
+    <button class="btn btn--outline btn--sm" id="logout-btn-mobile">
+      <i class="fas fa-right-from-bracket"></i>
+    </button>
+  </header>
+
+  <!-- ====================================================
+       TAB: PACKAGES
+  ==================================================== -->
+  <section class="admin-tab active" id="tab-packages" aria-label="Packages management">
+    <div class="admin-tab__header">
+      <h2 class="admin-tab__title">Packages</h2>
+      <button class="btn btn--primary btn--sm" id="btn-new-package">
+        <i class="fas fa-plus"></i> New Package
+      </button>
+    </div>
+
+    <!-- Package list -->
+    <div class="admin-table-wrap" id="packages-table-wrap">
+      <div class="admin-loading" id="packages-loading">
+        <i class="fas fa-circle-notch fa-spin"></i> Loading packages…
+      </div>
+      <table class="admin-table hidden" id="packages-table" aria-label="Packages list">
+        <thead>
+          <tr>
+            <th>Tracking #</th>
+            <th>Sender</th>
+            <th>Receiver</th>
+            <th>Route</th>
+            <th>Status</th>
+            <th>Est. Delivery</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="packages-tbody"></tbody>
+      </table>
+      <div class="admin-empty hidden" id="packages-empty">No packages yet. Create your first one.</div>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       TAB: CONTACTS
+  ==================================================== -->
+  <section class="admin-tab hidden" id="tab-contacts" aria-label="Contact messages">
+    <div class="admin-tab__header">
+      <h2 class="admin-tab__title">Messages</h2>
+    </div>
+    <div id="contacts-loading" class="admin-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading messages…</div>
+    <div id="contacts-list" class="contacts-list hidden"></div>
+    <div class="admin-empty hidden" id="contacts-empty">No messages yet.</div>
+  </section>
+
+  <!-- ====================================================
+       TAB: SERVICES
+  ==================================================== -->
+  <section class="admin-tab hidden" id="tab-services" aria-label="Services management">
+    <div class="admin-tab__header">
+      <h2 class="admin-tab__title">Services</h2>
+      <button class="btn btn--primary btn--sm" id="btn-new-service">
+        <i class="fas fa-plus"></i> New Service
+      </button>
+    </div>
+    <div id="services-loading" class="admin-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading services…</div>
+    <div id="services-list" class="hidden"></div>
+    <div class="admin-empty hidden" id="services-empty">No services yet.</div>
+  </section>
+
+  <!-- ====================================================
+       TAB: SITE SETTINGS
+  ==================================================== -->
+  <section class="admin-tab hidden" id="tab-settings" aria-label="Site settings">
+    <div class="admin-tab__header">
+      <h2 class="admin-tab__title">Site Settings</h2>
+    </div>
+    <div id="settings-loading" class="admin-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading settings…</div>
+    <div id="settings-form-wrap" class="hidden">
+      <!-- Rendered dynamically by admin.js into grouped sections -->
+    </div>
+  </section>
+
+  <!-- ====================================================
+       TAB: QUOTE PRICING
+  ==================================================== -->
+  <section class="admin-tab hidden" id="tab-pricing" aria-label="Quote pricing">
+    <div class="admin-tab__header">
+      <h2 class="admin-tab__title">Quote Pricing Rules</h2>
+    </div>
+    <div id="pricing-loading" class="admin-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading pricing…</div>
+    <div class="admin-table-wrap hidden" id="pricing-wrap">
+      <table class="admin-table" id="pricing-table" aria-label="Pricing rules">
+        <thead>
+          <tr>
+            <th>Zone</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Base Rate</th>
+            <th>Per KG</th>
+            <th>Transit (days)</th>
+            <th>Active</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="pricing-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ====================================================
+       TAB: ERROR LOGS
+  ==================================================== -->
+  <section class="admin-tab hidden" id="tab-errors" aria-label="Error logs">
+    <div class="admin-tab__header">
+      <h2 class="admin-tab__title">Error Logs</h2>
+    </div>
+    <div id="errors-loading" class="admin-loading"><i class="fas fa-circle-notch fa-spin"></i> Loading logs…</div>
+    <div class="admin-table-wrap hidden" id="errors-wrap">
+      <table class="admin-table" id="errors-table">
+        <thead>
+          <tr><th>Time</th><th>Type</th><th>Message</th><th>Page</th></tr>
+        </thead>
+        <tbody id="errors-tbody"></tbody>
+      </table>
+    </div>
+    <div class="admin-empty hidden" id="errors-empty">No errors logged. 🎉</div>
+  </section>
+
+</main>
+
+<!-- ====================================================
+     MODALS
+==================================================== -->
+
+<!-- Package Modal -->
+<div class="modal-overlay" id="modal-package" role="dialog" aria-modal="true" aria-labelledby="modal-package-title">
+  <div class="modal" style="max-width:680px;max-height:90vh;overflow-y:auto">
+    <div class="modal__header">
+      <h3 id="modal-package-title" class="modal__title">New Package</h3>
+      <button class="modal__close" aria-label="Close"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="package-form" novalidate>
+      <input type="hidden" id="pkg-id">
+
+      <div class="admin-form-section">
+        <div class="admin-form-section__title">Tracking</div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="pkg-tracking">Tracking Number</label>
+            <input type="text" id="pkg-tracking" class="form-input" placeholder="Auto-generated if empty" maxlength="25">
+            <span class="form-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-service">Service Type <span class="required">*</span></label>
+            <select id="pkg-service" class="form-select" required>
+              <option value="">Select service…</option>
+              <option value="express">Express Delivery</option>
+              <option value="standard">Standard Shipping</option>
+              <option value="freight">Freight &amp; Cargo</option>
+              <option value="same-day">Same-Day Courier</option>
+              <option value="cold-chain">Cold Chain</option>
+              <option value="customs">Customs Clearance</option>
+            </select>
+            <span class="form-error"></span>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="pkg-status">Status <span class="required">*</span></label>
+            <select id="pkg-status" class="form-select" required>
+              <option value="pending">Pending Pickup</option>
+              <option value="picked_up">Picked Up</option>
+              <option value="in_transit">In Transit</option>
+              <option value="customs">Customs</option>
+              <option value="out_for_delivery">Out for Delivery</option>
+              <option value="delivered">Delivered</option>
+              <option value="exception">Exception</option>
+              <option value="returned">Returned</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-eta">Estimated Delivery</label>
+            <input type="date" id="pkg-eta" class="form-input">
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <div class="admin-form-section__title">Sender</div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="pkg-sender-name">Name <span class="required">*</span></label>
+            <input type="text" id="pkg-sender-name" class="form-input" required>
+            <span class="form-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-sender-email">Email</label>
+            <input type="email" id="pkg-sender-email" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-sender-phone">Phone</label>
+            <input type="tel" id="pkg-sender-phone" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-sender-country">Country <span class="required">*</span></label>
+            <input type="text" id="pkg-sender-country" class="form-input" placeholder="e.g. United States" required>
+            <span class="form-error"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pkg-sender-address">Address</label>
+          <input type="text" id="pkg-sender-address" class="form-input">
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <div class="admin-form-section__title">Receiver</div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="pkg-recv-name">Name <span class="required">*</span></label>
+            <input type="text" id="pkg-recv-name" class="form-input" required>
+            <span class="form-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-recv-email">Email</label>
+            <input type="email" id="pkg-recv-email" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-recv-phone">Phone</label>
+            <input type="tel" id="pkg-recv-phone" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-recv-country">Country <span class="required">*</span></label>
+            <input type="text" id="pkg-recv-country" class="form-input" placeholder="e.g. United Kingdom" required>
+            <span class="form-error"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pkg-recv-address">Address</label>
+          <input type="text" id="pkg-recv-address" class="form-input">
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <div class="admin-form-section__title">Package Details</div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="pkg-weight">Weight (kg)</label>
+            <input type="number" id="pkg-weight" class="form-input" step="0.1" min="0.1" max="1000">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-dimensions">Dimensions (cm)</label>
+            <input type="text" id="pkg-dimensions" class="form-input" placeholder="e.g. 30x20x15">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-value">Declared Value (USD)</label>
+            <input type="number" id="pkg-value" class="form-input" step="0.01" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-current-location">Current Location Name</label>
+            <input type="text" id="pkg-current-location" class="form-input" placeholder="e.g. London, United Kingdom">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-lat">Current Latitude</label>
+            <input type="number" id="pkg-lat" class="form-input" step="0.000001" placeholder="e.g. 51.5074">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pkg-lng">Current Longitude</label>
+            <input type="number" id="pkg-lng" class="form-input" step="0.000001" placeholder="e.g. -0.1278">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="pkg-description">Contents Description</label>
+          <textarea id="pkg-description" class="form-textarea" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div id="package-form-error" class="admin-error hidden" role="alert"></div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn--outline" id="pkg-cancel">Cancel</button>
+        <button type="submit" class="btn btn--primary" id="pkg-save">Save Package</button>
+      </div>
+    </form>
+
+    <!-- Checkpoint sub-section (shown after package is saved) -->
+    <div id="checkpoint-section" class="admin-checkpoint-section hidden">
+      <div class="admin-form-section__title" style="margin-top:var(--gap-md)">
+        <i class="fas fa-map-pin"></i> Tracking Checkpoints
+      </div>
+      <div id="checkpoint-list"></div>
+      <button class="btn btn--outline btn--sm mt-sm" id="btn-add-checkpoint">
+        <i class="fas fa-plus"></i> Add Checkpoint
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Checkpoint Modal -->
+<div class="modal-overlay" id="modal-checkpoint" role="dialog" aria-modal="true" aria-labelledby="modal-checkpoint-title">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 id="modal-checkpoint-title" class="modal__title">Add Checkpoint</h3>
+      <button class="modal__close" aria-label="Close"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="checkpoint-form" novalidate>
+      <input type="hidden" id="cp-package-id">
+      <input type="hidden" id="cp-id">
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label" for="cp-status">Status <span class="required">*</span></label>
+          <select id="cp-status" class="form-select" required>
+            <option value="pending">Pending Pickup</option>
+            <option value="picked_up">Picked Up</option>
+            <option value="in_transit">In Transit</option>
+            <option value="customs">Customs</option>
+            <option value="out_for_delivery">Out for Delivery</option>
+            <option value="delivered">Delivered</option>
+            <option value="exception">Exception</option>
+            <option value="returned">Returned</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cp-occurred">Date &amp; Time <span class="required">*</span></label>
+          <input type="datetime-local" id="cp-occurred" class="form-input" required>
+          <span class="form-error"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cp-location">Location Name <span class="required">*</span></label>
+        <input type="text" id="cp-location" class="form-input" placeholder="e.g. Frankfurt Airport, Germany" required>
+        <span class="form-error"></span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cp-description">Description</label>
+        <input type="text" id="cp-description" class="form-input" placeholder="e.g. Package arrived at sorting facility">
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label" for="cp-lat">Latitude</label>
+          <input type="number" id="cp-lat" class="form-input" step="0.000001" placeholder="e.g. 50.0379">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cp-lng">Longitude</label>
+          <input type="number" id="cp-lng" class="form-input" step="0.000001" placeholder="e.g. 8.5622">
+        </div>
+      </div>
+      <p style="font-size:0.78rem;color:var(--text-light);margin-bottom:var(--gap-sm)">
+        💡 Find coordinates: <a href="https://www.latlong.net/" target="_blank" rel="noopener">latlong.net</a> — search city name, copy lat/lng.
+      </p>
+      <div id="cp-form-error" class="admin-error hidden" role="alert"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn--outline" id="cp-cancel">Cancel</button>
+        <button type="submit" class="btn btn--primary" id="cp-save">Save Checkpoint</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Service Modal -->
+<div class="modal-overlay" id="modal-service" role="dialog" aria-modal="true" aria-labelledby="modal-service-title">
+  <div class="modal">
+    <div class="modal__header">
+      <h3 id="modal-service-title" class="modal__title">New Service</h3>
+      <button class="modal__close" aria-label="Close"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="service-form" novalidate>
+      <input type="hidden" id="svc-id">
+      <div class="form-group">
+        <label class="form-label" for="svc-title">Title <span class="required">*</span></label>
+        <input type="text" id="svc-title" class="form-input" required>
+        <span class="form-error"></span>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="svc-description">Description <span class="required">*</span></label>
+        <textarea id="svc-description" class="form-textarea" required></textarea>
+        <span class="form-error"></span>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label" for="svc-icon">Icon Key</label>
+          <select id="svc-icon" class="form-select">
+            <option value="zap">⚡ Express (zap)</option>
+            <option value="package">📦 Package</option>
+            <option value="anchor">⚓ Freight (anchor)</option>
+            <option value="clock">🕐 Same-Day (clock)</option>
+            <option value="thermometer">🌡️ Cold Chain</option>
+            <option value="file-check">📋 Customs</option>
+            <option value="truck">🚚 Truck</option>
+            <option value="globe">🌍 Global</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="svc-price">Starting Price (USD)</label>
+          <input type="number" id="svc-price" class="form-input" step="0.01" min="0">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="form-label" for="svc-order">Sort Order</label>
+          <input type="number" id="svc-order" class="form-input" min="1" value="1">
+        </div>
+        <div class="form-group" style="justify-content:flex-end;padding-top:1.5rem">
+          <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
+            <input type="checkbox" id="svc-active" checked style="width:auto">
+            <span class="form-label" style="margin:0">Active (visible on site)</span>
+          </label>
+        </div>
+      </div>
+      <div id="svc-form-error" class="admin-error hidden" role="alert"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn--outline" id="svc-cancel">Cancel</button>
+        <button type="submit" class="btn btn--primary" id="svc-save">Save Service</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module" src="../../js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Swift Speed Sender — International courier and logistics since 1940. Track packages, get quotes, and ship worldwide with confidence.">
+  <title>Swift Speed Sender — Delivering Trust Since 1940</title>
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/home.css">
+
+  <!-- Env config injected by Netlify -->
+  <script>
+    window.__SSS_ENV = {
+      SUPABASE_URL:  '%%SUPABASE_URL%%',
+      SUPABASE_ANON: '%%SUPABASE_ANON_KEY%%'
+    };
+  </script>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader" role="status" aria-label="Loading">
+  <div class="loader-logo">Swift Speed Sender</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo" aria-label="Swift Speed Sender Home">
+      <span class="navbar__logo-name">Swift Speed Sender</span>
+      <span class="navbar__logo-sub">Est. 1940 · Worldwide Courier</span>
+    </a>
+
+    <div class="navbar__nav" role="navigation">
+      <a href="index.html"    class="navbar__link">Home</a>
+      <a href="track.html"    class="navbar__link">Track Package</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="about.html"    class="navbar__link">About</a>
+      <a href="contact.html"  class="navbar__link">Contact</a>
+      <a href="track.html"    class="navbar__link navbar__cta">Track Now</a>
+    </div>
+
+    <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-label="Hero section">
+  <div class="hero__bg">
+    <div class="hero__bg-overlay"></div>
+    <img
+      id="hero-bg-img"
+      src="../images/hero-placeholder.jpg"
+      alt="Global logistics network"
+      class="hero__bg-image"
+      data-setting-src="hero_image_url"
+    >
+    <!-- Animated grid lines -->
+    <div class="hero__grid" aria-hidden="true"></div>
+  </div>
+
+  <div class="container hero__content">
+    <div class="hero__text">
+      <span class="hero__est reveal reveal-delay-1">
+        <span class="hero__est-line"></span>
+        <span>Established 1940</span>
+        <span class="hero__est-line"></span>
+      </span>
+
+      <h1 class="hero__headline reveal reveal-delay-2" data-setting="hero_headline">
+        Your Shipment,<br><em>Our Commitment.</em>
+      </h1>
+
+      <p class="hero__subtext reveal reveal-delay-3" data-setting="hero_subtext">
+        Eight decades of precision logistics. Trusted by families and businesses across 140 countries.
+      </p>
+
+      <div class="hero__actions reveal reveal-delay-4">
+        <a href="track.html" class="btn btn--primary btn--lg">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <span data-setting="hero_cta_primary">Track Your Package</span>
+        </a>
+        <a href="contact.html" class="btn btn--secondary btn--lg">
+          <span data-setting="hero_cta_secondary">Get a Quote</span>
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Track Widget -->
+    <div class="hero__track-widget reveal reveal-delay-3" role="search" aria-label="Quick package tracking">
+      <div class="hero__track-label">Quick Track</div>
+      <form class="hero__track-form" id="hero-track-form" novalidate>
+        <div class="hero__track-input-wrap">
+          <i class="fas fa-barcode hero__track-icon" aria-hidden="true"></i>
+          <input
+            type="text"
+            id="hero-track-input"
+            class="hero__track-input"
+            placeholder="Enter tracking number…"
+            maxlength="20"
+            autocomplete="off"
+            aria-label="Tracking number"
+          >
+        </div>
+        <button type="submit" class="btn btn--primary hero__track-btn">
+          Track
+        </button>
+      </form>
+      <p class="hero__track-hint">
+        Try demo: <button type="button" class="hero__demo-link" id="demo-track-btn">SSS-2024-DEMO1</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="hero__scroll" aria-hidden="true">
+    <div class="hero__scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ============ STATS BAR ============ -->
+<section class="stats-bar" aria-label="Company statistics">
+  <div class="container">
+    <div class="stats-bar__grid">
+      <div class="stats-bar__item reveal">
+        <div class="stats-bar__number">
+          <span data-counter="140" data-suffix="+">140+</span>
+        </div>
+        <div class="stats-bar__label">Countries Served</div>
+      </div>
+      <div class="stats-bar__item reveal reveal-delay-1">
+        <div class="stats-bar__number" id="stat-packages" data-setting="stat_packages">2.4M+</div>
+        <div class="stats-bar__label">Packages Delivered</div>
+      </div>
+      <div class="stats-bar__item reveal reveal-delay-2">
+        <div class="stats-bar__number" id="stat-years" data-setting="stat_years">84</div>
+        <div class="stats-bar__label">Years in Business</div>
+      </div>
+      <div class="stats-bar__item reveal reveal-delay-3">
+        <div class="stats-bar__number" id="stat-satisfaction" data-setting="stat_satisfaction">99.2%</div>
+        <div class="stats-bar__label">Customer Satisfaction</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<div class="trust-strip" aria-label="Trust indicators">
+  <div class="container">
+    <div class="trust-strip__inner">
+      <div class="trust-strip__item">
+        <i class="fas fa-shield-halved"></i>
+        <span>Fully Insured Shipments</span>
+      </div>
+      <div class="trust-strip__sep" aria-hidden="true">·</div>
+      <div class="trust-strip__item">
+        <i class="fas fa-satellite-dish"></i>
+        <span>Real-Time GPS Tracking</span>
+      </div>
+      <div class="trust-strip__sep" aria-hidden="true">·</div>
+      <div class="trust-strip__item">
+        <i class="fas fa-clock"></i>
+        <span>24/7 Customer Support</span>
+      </div>
+      <div class="trust-strip__sep" aria-hidden="true">·</div>
+      <div class="trust-strip__item">
+        <i class="fas fa-globe"></i>
+        <span>140+ Countries</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SERVICES PREVIEW ============ -->
+<section class="section services-preview" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-header text-center reveal">
+      <span class="eyebrow">What We Offer</span>
+      <h2 id="services-heading">Logistics Solutions<br><em>Built for Every Need</em></h2>
+      <div class="gold-line gold-line--center"></div>
+      <p class="section-intro">
+        From urgent express parcels to heavy freight — we have carried it all since the post-war era. Every service comes with our 84-year guarantee of care.
+      </p>
+    </div>
+
+    <div class="services-grid" id="services-grid" aria-live="polite">
+      <!-- Loaded dynamically from Supabase -->
+      <div class="services-loading">
+        <div class="loading-pulse"></div>
+        <div class="loading-pulse"></div>
+        <div class="loading-pulse"></div>
+      </div>
+    </div>
+
+    <div class="text-center mt-lg reveal">
+      <a href="services.html" class="btn btn--outline btn--lg">
+        View All Services
+        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section section--dark how-it-works" aria-labelledby="how-heading">
+  <div class="container">
+    <div class="section-header text-center reveal">
+      <span class="eyebrow text-gold">The Process</span>
+      <h2 id="how-heading" style="color:var(--cream)">How It Works</h2>
+      <div class="gold-line gold-line--center"></div>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <div class="how-step__number">01</div>
+        <div class="how-step__icon"><i class="fas fa-box" aria-hidden="true"></i></div>
+        <h3>Book & Pack</h3>
+        <p>Request a quote, choose your service, and prepare your shipment. We guide you through every documentation requirement.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-1">
+        <div class="how-step__number">02</div>
+        <div class="how-step__icon"><i class="fas fa-truck-pickup" aria-hidden="true"></i></div>
+        <h3>We Collect</h3>
+        <p>Our courier arrives at your door at your chosen time. White-glove handling from the moment we take your parcel.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="how-step__number">03</div>
+        <div class="how-step__icon"><i class="fas fa-plane-departure" aria-hidden="true"></i></div>
+        <h3>In Transit</h3>
+        <p>Watch your package move in real time on our tracking map. Every checkpoint updated as it happens, worldwide.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-3">
+        <div class="how-step__number">04</div>
+        <div class="how-step__icon"><i class="fas fa-house-chimney-check" aria-hidden="true"></i></div>
+        <h3>Delivered</h3>
+        <p>Safe delivery, signature confirmed, and a digital proof of delivery sent to both sender and receiver instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT TEASER ============ -->
+<section class="section about-teaser" aria-labelledby="about-teaser-heading">
+  <div class="container">
+    <div class="about-teaser__grid">
+      <div class="about-teaser__image-wrap reveal-left">
+        <div class="about-teaser__image-frame">
+          <img
+            src="../images/about-placeholder.jpg"
+            alt="Swift Speed Sender founding era"
+            class="about-teaser__image"
+            data-setting-src="about_image_url"
+            loading="lazy"
+          >
+          <div class="about-teaser__badge">
+            <span class="about-teaser__badge-year" data-setting="company_established">1940</span>
+            <span class="about-teaser__badge-label">Est.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-teaser__content reveal">
+        <span class="eyebrow">Our Story</span>
+        <h2 id="about-teaser-heading" data-setting="about_headline">A Legacy of Reliability</h2>
+        <div class="gold-line"></div>
+        <p class="about-teaser__text" data-setting="about_story">
+          Founded in the post-war recovery of 1940 by maritime veteran Harold J. Swift, our company began with a single promise…
+        </p>
+        <blockquote class="about-teaser__quote">
+          <p data-setting="about_mission">"To connect people and businesses across every distance, delivering not just packages but peace of mind."</p>
+          <cite>— Harold J. Swift, Founder</cite>
+        </blockquote>
+        <a href="about.html" class="btn btn--outline mt-md">
+          Read Our Story
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTE CALCULATOR TEASER ============ -->
+<section class="section section--cream quote-teaser" aria-labelledby="quote-heading">
+  <div class="container container--narrow text-center">
+    <span class="eyebrow reveal">Instant Pricing</span>
+    <h2 id="quote-heading" class="reveal">Get a Shipping Quote<br><em>in Seconds</em></h2>
+    <div class="gold-line gold-line--center reveal"></div>
+    <p class="reveal" style="margin-bottom:var(--gap-md)">
+      No hidden fees. No surprises. Our quote calculator uses the same pricing our agents use, available to you 24/7.
+    </p>
+    <a href="contact.html#quote" class="btn btn--primary btn--lg reveal">
+      <i class="fas fa-calculator" aria-hidden="true"></i>
+      Calculate My Shipment
+    </a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="footer__brand-name" data-setting="company_name">Swift Speed Sender</div>
+        <div class="footer__brand-est">Est. <span data-setting="company_established">1940</span></div>
+        <p class="footer__tagline" data-setting="footer_tagline">Delivering Trust Since 1940.</p>
+        <div class="footer__social" aria-label="Social media links">
+          <a href="#" class="footer__social-link" data-setting-href="social_facebook" aria-label="Facebook" rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-facebook-f" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer__social-link" data-setting-href="social_instagram" aria-label="Instagram" rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-instagram" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer__social-link" data-setting-href="social_twitter" aria-label="Twitter/X" rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-x-twitter" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer__social-link" data-setting-href="social_whatsapp" aria-label="WhatsApp" rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="footer__social-link" data-setting-href="social_linkedin" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank">
+            <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <div class="footer__heading">Navigation</div>
+        <nav class="footer__links" aria-label="Footer navigation">
+          <a href="index.html"    class="footer__link">Home</a>
+          <a href="track.html"    class="footer__link">Track Package</a>
+          <a href="services.html" class="footer__link">Services</a>
+          <a href="about.html"    class="footer__link">About Us</a>
+          <a href="contact.html"  class="footer__link">Contact</a>
+        </nav>
+      </div>
+
+      <div class="footer__col">
+        <div class="footer__heading">Services</div>
+        <nav class="footer__links" aria-label="Footer services">
+          <a href="services.html" class="footer__link">Express Delivery</a>
+          <a href="services.html" class="footer__link">Standard Shipping</a>
+          <a href="services.html" class="footer__link">Freight &amp; Cargo</a>
+          <a href="services.html" class="footer__link">Same-Day Courier</a>
+          <a href="services.html" class="footer__link">Cold Chain</a>
+          <a href="services.html" class="footer__link">Customs Clearance</a>
+        </nav>
+      </div>
+
+      <div class="footer__col">
+        <div class="footer__heading">Contact</div>
+        <address style="font-style:normal">
+          <div class="footer__contact-item">
+            <i class="fas fa-phone footer__contact-icon" aria-hidden="true"></i>
+            <a href="tel:+18005550192" class="footer__link" data-setting="company_phone">+1 (800) 555-0192</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-envelope footer__contact-icon" aria-hidden="true"></i>
+            <a href="mailto:contact@swiftspeedsender.com" class="footer__link" data-setting="company_email">contact@swiftspeedsender.com</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-location-dot footer__contact-icon" aria-hidden="true"></i>
+            <span data-setting="company_address">1940 Commerce Boulevard, New York, NY 10001</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-clock footer__contact-icon" aria-hidden="true"></i>
+            <span data-setting="company_hours">Mon–Fri: 8AM–8PM | Sat: 9AM–5PM</span>
+          </div>
+        </address>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>© <span id="footer-year"></span> <span data-setting="footer_copyright">Swift Speed Sender. All rights reserved.</span></p>
+      <div class="footer__bottom-links">
+        <a href="#" class="footer__bottom-link">Privacy Policy</a>
+        <a href="#" class="footer__bottom-link">Terms of Service</a>
+        <a href="#" class="footer__bottom-link">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/home.js"></script>
+</body>
+</html>

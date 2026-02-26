@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact Swift Speed Sender — get a shipping quote or send us a message. Available Mon–Fri 8AM–8PM.">
+  <title>Contact — Swift Speed Sender</title>
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/contact.css">
+  <script>
+    window.__SSS_ENV = {
+      SUPABASE_URL:  '%%SUPABASE_URL%%',
+      SUPABASE_ANON: '%%SUPABASE_ANON_KEY%%'
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div id="page-loader" role="status" aria-label="Loading">
+  <div class="loader-logo">Swift Speed Sender</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<nav class="navbar" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <span class="navbar__logo-name">Swift Speed Sender</span>
+      <span class="navbar__logo-sub">Est. 1940 · Worldwide Courier</span>
+    </a>
+    <div class="navbar__nav">
+      <a href="index.html"    class="navbar__link">Home</a>
+      <a href="track.html"    class="navbar__link">Track Package</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="about.html"    class="navbar__link">About</a>
+      <a href="contact.html"  class="navbar__link">Contact</a>
+      <a href="track.html"    class="navbar__link navbar__cta">Track Now</a>
+    </div>
+    <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero__eyebrow">Get in Touch</div>
+    <h1 class="page-hero__title">Contact Us</h1>
+    <p class="page-hero__subtitle">We respond within 24 hours. For urgent shipping needs, call us directly.</p>
+  </div>
+</div>
+
+<section class="section contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: Info -->
+      <div class="contact-info reveal-left">
+        <span class="eyebrow">Reach Us</span>
+        <h2>We're Here to Help</h2>
+        <div class="gold-line"></div>
+
+        <div class="contact-info__items">
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="contact-info__label">Phone</div>
+              <a href="tel:+18005550192" class="contact-info__value" data-setting="company_phone">+1 (800) 555-0192</a>
+            </div>
+          </div>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="contact-info__label">Email</div>
+              <a href="mailto:contact@swiftspeedsender.com" class="contact-info__value" data-setting="company_email">contact@swiftspeedsender.com</a>
+            </div>
+          </div>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><i class="fab fa-whatsapp"></i></div>
+            <div>
+              <div class="contact-info__label">WhatsApp</div>
+              <a href="#" class="contact-info__value" data-setting-href="social_whatsapp" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+            </div>
+          </div>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><i class="fas fa-location-dot"></i></div>
+            <div>
+              <div class="contact-info__label">Address</div>
+              <span class="contact-info__value" data-setting="company_address">1940 Commerce Boulevard, New York, NY 10001</span>
+            </div>
+          </div>
+          <div class="contact-info__item">
+            <div class="contact-info__icon"><i class="fas fa-clock"></i></div>
+            <div>
+              <div class="contact-info__label">Hours</div>
+              <span class="contact-info__value" data-setting="company_hours">Mon–Fri: 8AM–8PM | Sat: 9AM–5PM</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-social">
+          <div class="contact-social__label">Follow Us</div>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" data-setting-href="social_facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="footer__social-link" data-setting-href="social_instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="footer__social-link" data-setting-href="social_twitter" aria-label="Twitter/X" target="_blank" rel="noopener noreferrer"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="footer__social-link" data-setting-href="social_linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Forms -->
+      <div class="contact-forms reveal">
+
+        <!-- Tabs -->
+        <div class="contact-tabs" role="tablist">
+          <button class="contact-tab active" data-tab="contact" role="tab" aria-selected="true">
+            <i class="fas fa-envelope"></i> Send Message
+          </button>
+          <button class="contact-tab" data-tab="quote" id="quote-tab-btn" role="tab" aria-selected="false">
+            <i class="fas fa-calculator"></i> Get a Quote
+          </button>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-panel active" id="panel-contact">
+          <form id="contact-form" novalidate>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="contact-name">Full Name <span style="color:var(--red-alert)">*</span></label>
+                <input type="text" id="contact-name" class="form-input" required autocomplete="name">
+                <span class="form-error">Name is required</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contact-email">Email <span style="color:var(--red-alert)">*</span></label>
+                <input type="email" id="contact-email" class="form-input" required autocomplete="email">
+                <span class="form-error">Valid email is required</span>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="contact-phone">Phone</label>
+                <input type="tel" id="contact-phone" class="form-input" autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="contact-subject">Subject</label>
+                <input type="text" id="contact-subject" class="form-input">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contact-message">Message <span style="color:var(--red-alert)">*</span></label>
+              <textarea id="contact-message" class="form-textarea" rows="5" required></textarea>
+              <span class="form-error">Message is required (min 10 characters)</span>
+            </div>
+            <div id="contact-result" class="hidden" role="alert" aria-live="polite"></div>
+            <button type="submit" class="btn btn--primary btn--lg" id="contact-submit" style="width:100%;justify-content:center">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Quote Calculator -->
+        <div class="contact-panel hidden" id="panel-quote">
+          <form id="quote-form" novalidate>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="quote-origin">Origin Country <span style="color:var(--red-alert)">*</span></label>
+                <input type="text" id="quote-origin" class="form-input" placeholder="e.g. US" maxlength="3" required>
+                <span class="form-error">Required (2-letter country code)</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="quote-dest">Destination Country <span style="color:var(--red-alert)">*</span></label>
+                <input type="text" id="quote-dest" class="form-input" placeholder="e.g. GB" maxlength="3" required>
+                <span class="form-error">Required (2-letter country code)</span>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="quote-weight">Weight (kg) <span style="color:var(--red-alert)">*</span></label>
+                <input type="number" id="quote-weight" class="form-input" step="0.1" min="0.1" max="1000" required>
+                <span class="form-error">Valid weight required</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="quote-type">Package Type</label>
+                <select id="quote-type" class="form-select">
+                  <option value="document">Document / Envelope</option>
+                  <option value="parcel" selected>Parcel / Box</option>
+                  <option value="freight">Freight / Pallet</option>
+                  <option value="perishable">Perishable Goods</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label" for="quote-value">Declared Value (USD)</label>
+                <input type="number" id="quote-value" class="form-input" step="0.01" min="0" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="quote-email">Your Email (for quote copy)</label>
+                <input type="email" id="quote-email" class="form-input" autocomplete="email">
+              </div>
+            </div>
+            <p style="font-size:0.78rem;color:var(--text-light);margin-bottom:var(--gap-sm)">
+              Country codes: US = United States · GB = United Kingdom · DE = Germany · AU = Australia · JP = Japan, etc.
+            </p>
+            <div id="quote-result" class="hidden" role="alert" aria-live="polite"></div>
+            <button type="submit" class="btn btn--primary btn--lg" id="quote-submit" style="width:100%;justify-content:center">
+              <i class="fas fa-calculator"></i> Calculate Quote
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="footer__brand-name" data-setting="company_name">Swift Speed Sender</div>
+        <div class="footer__brand-est">Est. <span data-setting="company_established">1940</span></div>
+        <p class="footer__tagline" data-setting="footer_tagline">Delivering Trust Since 1940.</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" data-setting-href="social_facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer__social-link" data-setting-href="social_instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer__social-link" data-setting-href="social_whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="footer__social-link" data-setting-href="social_linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Navigation</div>
+        <nav class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="track.html" class="footer__link">Track Package</a>
+          <a href="services.html" class="footer__link">Services</a>
+          <a href="about.html" class="footer__link">About Us</a>
+          <a href="contact.html" class="footer__link">Contact</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Services</div>
+        <nav class="footer__links">
+          <a href="services.html" class="footer__link">Express Delivery</a>
+          <a href="services.html" class="footer__link">Standard Shipping</a>
+          <a href="services.html" class="footer__link">Freight &amp; Cargo</a>
+          <a href="services.html" class="footer__link">Same-Day Courier</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Contact</div>
+        <address style="font-style:normal">
+          <div class="footer__contact-item">
+            <i class="fas fa-phone footer__contact-icon"></i>
+            <a href="tel:+18005550192" class="footer__link" data-setting="company_phone">+1 (800) 555-0192</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-envelope footer__contact-icon"></i>
+            <a href="mailto:contact@swiftspeedsender.com" class="footer__link" data-setting="company_email">contact@swiftspeedsender.com</a>
+          </div>
+        </address>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span id="footer-year"></span> <span data-setting="footer_copyright">Swift Speed Sender. All rights reserved.</span></p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/contact.js"></script>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

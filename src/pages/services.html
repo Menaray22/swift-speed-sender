@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Swift Speed Sender services — Express, Standard, Freight, Same-Day, Cold Chain and Customs Clearance worldwide.">
+  <title>Services — Swift Speed Sender</title>
+  <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/services.css">
+  <script>
+    window.__SSS_ENV = {
+      SUPABASE_URL:  '%%SUPABASE_URL%%',
+      SUPABASE_ANON: '%%SUPABASE_ANON_KEY%%'
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div id="page-loader" role="status" aria-label="Loading">
+  <div class="loader-logo">Swift Speed Sender</div>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" aria-label="Main navigation">
+  <div class="container navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <span class="navbar__logo-name">Swift Speed Sender</span>
+      <span class="navbar__logo-sub">Est. 1940 · Worldwide Courier</span>
+    </a>
+    <div class="navbar__nav">
+      <a href="index.html"    class="navbar__link">Home</a>
+      <a href="track.html"    class="navbar__link">Track Package</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="about.html"    class="navbar__link">About</a>
+      <a href="contact.html"  class="navbar__link">Contact</a>
+      <a href="track.html"    class="navbar__link navbar__cta">Track Now</a>
+    </div>
+    <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="page-hero__eyebrow">What We Offer</div>
+    <h1 class="page-hero__title">Our Services</h1>
+    <p class="page-hero__subtitle">Eight decades of logistics expertise. Every service backed by our worldwide network and commitment to on-time delivery.</p>
+  </div>
+</div>
+
+<!-- SERVICES GRID -->
+<section class="section" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="text-center reveal" style="margin-bottom:var(--gap-lg)">
+      <span class="eyebrow">Full Range of Logistics</span>
+      <h2 id="services-heading">Solutions for Every Shipment</h2>
+      <div class="gold-line gold-line--center"></div>
+    </div>
+
+    <div class="services-full-grid" id="services-full-grid" aria-live="polite">
+      <!-- Skeletons while loading -->
+      <div class="svc-skeleton"></div>
+      <div class="svc-skeleton"></div>
+      <div class="svc-skeleton"></div>
+      <div class="svc-skeleton"></div>
+      <div class="svc-skeleton"></div>
+      <div class="svc-skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section section--dark why-us" aria-labelledby="why-heading">
+  <div class="container">
+    <div class="text-center reveal">
+      <span class="eyebrow text-gold">The Swift Advantage</span>
+      <h2 id="why-heading" style="color:var(--cream)">Why Ship With Us?</h2>
+      <div class="gold-line gold-line--center"></div>
+    </div>
+
+    <div class="grid-3 mt-lg">
+      <div class="why-card reveal">
+        <div class="why-card__icon"><i class="fas fa-shield-halved"></i></div>
+        <h3>Fully Insured</h3>
+        <p>Every shipment is insured from pickup to delivery. Declare your value and ship with complete confidence.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-card__icon"><i class="fas fa-satellite-dish"></i></div>
+        <h3>Real-Time Tracking</h3>
+        <p>Live GPS tracking with map view. Your customers always know exactly where their shipment is.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-card__icon"><i class="fas fa-headset"></i></div>
+        <h3>24/7 Support</h3>
+        <p>Our logistics team is available around the clock. Email, phone, or WhatsApp — we answer fast.</p>
+      </div>
+      <div class="why-card reveal">
+        <div class="why-card__icon"><i class="fas fa-globe"></i></div>
+        <h3>140+ Countries</h3>
+        <p>Our network spans every continent. Reliable coverage whether you're shipping across town or across the world.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-card__icon"><i class="fas fa-file-contract"></i></div>
+        <h3>Customs Expertise</h3>
+        <p>Licensed customs brokers handle documentation and compliance in every country we operate.</p>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-card__icon"><i class="fas fa-calendar-check"></i></div>
+        <h3>Since 1940</h3>
+        <p>Over 84 years of experience means we have handled every scenario. Your shipment is in expert hands.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section text-center" aria-label="Call to action">
+  <div class="container container--narrow">
+    <span class="eyebrow reveal">Ready to Ship?</span>
+    <h2 class="reveal">Get a Quote in Minutes</h2>
+    <div class="gold-line gold-line--center reveal"></div>
+    <p class="reveal mb-md">No hidden fees. Transparent pricing. Instant estimates for any destination worldwide.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap" class="reveal">
+      <a href="contact.html#quote" class="btn btn--primary btn--lg">
+        <i class="fas fa-calculator"></i> Get a Quote
+      </a>
+      <a href="contact.html" class="btn btn--outline btn--lg">
+        <i class="fas fa-envelope"></i> Contact Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <div class="footer__brand-name" data-setting="company_name">Swift Speed Sender</div>
+        <div class="footer__brand-est">Est. <span data-setting="company_established">1940</span></div>
+        <p class="footer__tagline" data-setting="footer_tagline">Delivering Trust Since 1940.</p>
+        <div class="footer__social">
+          <a href="#" class="footer__social-link" data-setting-href="social_facebook" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer__social-link" data-setting-href="social_instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer__social-link" data-setting-href="social_whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="footer__social-link" data-setting-href="social_linkedin" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Navigation</div>
+        <nav class="footer__links">
+          <a href="index.html" class="footer__link">Home</a>
+          <a href="track.html" class="footer__link">Track Package</a>
+          <a href="services.html" class="footer__link">Services</a>
+          <a href="about.html" class="footer__link">About Us</a>
+          <a href="contact.html" class="footer__link">Contact</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Services</div>
+        <nav class="footer__links">
+          <a href="services.html" class="footer__link">Express Delivery</a>
+          <a href="services.html" class="footer__link">Standard Shipping</a>
+          <a href="services.html" class="footer__link">Freight &amp; Cargo</a>
+          <a href="services.html" class="footer__link">Same-Day Courier</a>
+        </nav>
+      </div>
+      <div class="footer__col">
+        <div class="footer__heading">Contact</div>
+        <address style="font-style:normal">
+          <div class="footer__contact-item">
+            <i class="fas fa-phone footer__contact-icon"></i>
+            <a href="tel:+18005550192" class="footer__link" data-setting="company_phone">+1 (800) 555-0192</a>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-envelope footer__contact-icon"></i>
+            <a href="mailto:contact@swiftspeedsender.com" class="footer__link" data-setting="company_email">contact@swiftspeedsender.com</a>
+          </div>
+        </address>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>© <span id="footer-year"></span> <span data-setting="footer_copyright">Swift Speed Sender. All rights reserved.</span></p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/services.js"></script>
+<script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
