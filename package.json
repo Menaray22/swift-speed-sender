@@ -1,0 +1,19 @@
+{
+  "name": "swift-speed-sender",
+  "version": "1.0.0",
+  "description": "Swift Speed Sender — Courier Website",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'Static site — no build step required'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "nodemailer": "^6.9.8"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
